@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Operador</th>
+            <th scope="col">Vuelo</th>
+            <th scope="col">Ruta</th>
+            <th scope="col">Dom</th>
+            <th scope="col">Lun</th>
+            <th scope="col">Mar</th>
+            <th scope="col">Mier</th>
+            <th scope="col">Jue</th>
+            <th scope="col">Vie</th>
+            <th scope="col">Sab</th>
+            <th scope="col">Hora Salida</th>
+            <th scope="col">Hora Llegada</th>
+            <th scope="col">Distancia</th>
+            <th scope="col">Avion</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of vuelos">
+            <th scope="row">{{item.Id}}</th>
+            <td>{{item.Operador}}</td>
+            <td>{{item.Vuelo}}</td>
+            <td>{{item.Ruta}}</td>
+            <td>{{item.Dom}}</td>
+            <td>{{item.Lun}}</td>
+            <td>{{item.Mar}}</td>
+            <td>{{item.Mier}}</td>
+            <td>{{item.Jue}}</td>
+            <td>{{item.Vie}}</td>
+            <td>{{item.Sab}}</td>
+            <td>{{item.HoraSalida}}</td>
+            <td>{{item.HoraLlegada}}</td>
+            <td>{{item.Distancia}}</td>
+            <td>{{item.Avion}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

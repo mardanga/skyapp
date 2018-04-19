@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>Rango del piloto</label>
+        <select name="rangoSeleccionado" id="rangoSeleccionado" class="form-control" (change)="getAviones($event.target.value)">
+          <option value="-1" selected="true" >Seleccione</option>
+        <option *ngFor="let r of rangos" value="{{r.Nivel}}">{{r.Descripcion}}</option>
+      </select>
+      </div>
+
+      <form (submit)="buscarVuelo()">
+      <div class="form-group" *ngIf="isDataLoaded">
+        <label>Aviones</label>
+        <div class="form-check" *ngFor="let r of aviones; let i = index">
+        <input type="checkbox"
+          name="options"
+          value="{{r.Id}}"
+          [checked]="r.Seleccionado" 
+          (change)="r.Seleccionado = !r.Seleccionado" 
+          />
+          {{r.Avion}}
+        </div>
+      </div>
+
+
+      <div class="form-group" *ngIf="isDataLoaded">
+        <input class="btn btn-outline-primary " type="submit" value="Buscar" />
+      </div>
+      </form>
+    </div>
+    
+    <div class="table-responsive">
+    <table class="table table-sm" *ngIf="listo">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Operador</th>
+          <th scope="col">Vuelo</th>
+          <th scope="col">Ruta</th>
+          <th scope="col" class="hidden-xs hidden-sm">Dom</th>
+          <th scope="col" class="hidden-xs hidden-sm">Lun</th>
+          <th scope="col" class="hidden-xs hidden-sm">Mar</th>
+          <th scope="col" class="hidden-xs hidden-sm">Mier</th>
+          <th scope="col" class="hidden-xs hidden-sm">Jue</th>
+          <th scope="col" class="hidden-xs hidden-sm">Vie</th>
+          <th scope="col" class="hidden-xs hidden-sm">Sab</th>
+          <th scope="col" class="hidden-xs hidden-sm">Hora Salida</th>
+          <th scope="col" class="hidden-xs hidden-sm">Hora Llegada</th>
+          <th scope="col" class="hidden-xs hidden-sm">Distancia</th>
+          <th scope="col" >Avion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{vuelo.Operador}}</td>
+          <td>{{vuelo.Vuelo}}</td>
+          <td>{{vuelo.Ruta}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Dom}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Lun}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Mar}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Mie}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Jue}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Vie}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Sab}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.HoraSalida}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.HoraLlegada}}</td>
+          <td class="hidden-xs hidden-sm">{{vuelo.Distancia}}</td>
+          <td>{{vuelo.Avion}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    
+  </div>
+</div>
