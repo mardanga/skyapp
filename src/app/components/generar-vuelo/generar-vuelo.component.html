@@ -1,75 +1,127 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label>Rango del piloto</label>
-        <select name="rangoSeleccionado" id="rangoSeleccionado" class="form-control" (change)="getAviones($event.target.value)">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Rango del piloto</label>
+                <select name="rangoSeleccionado" id="rangoSeleccionado" class="form-control" (change)="getAviones($event.target.value)">
           <option value="-1" selected="true" >Seleccione</option>
         <option *ngFor="let r of rangos" value="{{r.Nivel}}">{{r.Descripcion}}</option>
       </select>
-      </div>
+            </div>
+            <form (submit)="buscarVuelo()">
+                <div class="form-group" *ngIf="isDataLoaded">
+                    <label>Aviones</label>
+                    <div class="form-check" *ngFor="let r of aviones; let i = index">
+                        <input type="checkbox" name="options" value="{{r.Id}}" [checked]="r.Seleccionado" (change)="r.Seleccionado = !r.Seleccionado" /> {{r.Avion}}
+                    </div>
+                </div>
 
-      <form (submit)="buscarVuelo()">
-      <div class="form-group" *ngIf="isDataLoaded">
-        <label>Aviones</label>
-        <div class="form-check" *ngFor="let r of aviones; let i = index">
-        <input type="checkbox"
-          name="options"
-          value="{{r.Id}}"
-          [checked]="r.Seleccionado" 
-          (change)="r.Seleccionado = !r.Seleccionado" 
-          />
-          {{r.Avion}}
+
+                <div class="form-group" *ngIf="isDataLoaded">
+                    <input class="btn btn-outline-primary " type="submit" value="Buscar" />
+                </div>
+            </form>
         </div>
-      </div>
-
-
-      <div class="form-group" *ngIf="isDataLoaded">
-        <input class="btn btn-outline-primary " type="submit" value="Buscar" />
-      </div>
-      </form>
     </div>
-    
-    <div class="table-responsive">
-    <table class="table table-sm" *ngIf="listo">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Operador</th>
-          <th scope="col">Vuelo</th>
-          <th scope="col">Ruta</th>
-          <th scope="col" class="hidden-xs hidden-sm">Dom</th>
-          <th scope="col" class="hidden-xs hidden-sm">Lun</th>
-          <th scope="col" class="hidden-xs hidden-sm">Mar</th>
-          <th scope="col" class="hidden-xs hidden-sm">Mier</th>
-          <th scope="col" class="hidden-xs hidden-sm">Jue</th>
-          <th scope="col" class="hidden-xs hidden-sm">Vie</th>
-          <th scope="col" class="hidden-xs hidden-sm">Sab</th>
-          <th scope="col" class="hidden-xs hidden-sm">Hora Salida</th>
-          <th scope="col" class="hidden-xs hidden-sm">Hora Llegada</th>
-          <th scope="col" class="hidden-xs hidden-sm">Distancia</th>
-          <th scope="col" >Avion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{vuelo.Operador}}</td>
-          <td>{{vuelo.Vuelo}}</td>
-          <td>{{vuelo.Ruta}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Dom}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Lun}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Mar}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Mie}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Jue}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Vie}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Sab}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.HoraSalida}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.HoraLlegada}}</td>
-          <td class="hidden-xs hidden-sm">{{vuelo.Distancia}}</td>
-          <td>{{vuelo.Avion}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm" *ngIf="listo && !mobile">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Operador</th>
+                        <th scope="col">Vuelo</th>
+                        <th scope="col">Ruta</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Dom</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Lun</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Mar</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Mier</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Jue</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Vie</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Sab</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Hora Salida</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Hora Llegada</th>
+                        <th scope="col" class="hidden-xs hidden-sm">Distancia</th>
+                        <th scope="col">Avion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{vuelo.Operador}}</td>
+                        <td>{{vuelo.Vuelo}}</td>
+                        <td>{{vuelo.Ruta}}</td>
+                        <td>{{vuelo.Dom}}</td>
+                        <td>{{vuelo.Lun}}</td>
+                        <td>{{vuelo.Mar}}</td>
+                        <td>{{vuelo.Mie}}</td>
+                        <td>{{vuelo.Jue}}</td>
+                        <td>{{vuelo.Vie}}</td>
+                        <td>{{vuelo.Sab}}</td>
+                        <td>{{vuelo.HoraSalida}}</td>
+                        <td>{{vuelo.HoraLlegada}}</td>
+                        <td>{{vuelo.Distancia}}</td>
+                        <td>{{vuelo.Avion}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm" *ngIf="listo && mobile">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Vuelo</th>
+                        <th scope="col">Ruta</th>
+                        <th scope="col">Avion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#" (click)="open(content)">{{vuelo.Vuelo}}</a></td>
+                        <td>{{vuelo.Ruta}}</td>
+                        <td>{{vuelo.Avion}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    
-  </div>
+
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Detalle {{vuelo.Vuelo}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p>Operador: {{vuelo.Operador}}</p>
+            <p>Vuelo: {{vuelo.Vuelo}}</p>
+            <p>Ruta: {{vuelo.Ruta}}</p>
+            <div class="row">
+                <div class="col-6">
+                    <p>Dom: {{vuelo.Dom}}</p>
+                    <p>Lun: {{vuelo.Lun}}</p>
+                    <p>Mar: {{vuelo.Mar}}</p>
+                    <p>Mie: {{vuelo.Mie}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Jue: {{vuelo.Jue}}</p>
+                    <p>Vie: {{vuelo.Vie}}</p>
+                    <p>Sab: {{vuelo.Sab}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Salida: {{vuelo.HoraSalida}}</p>
+
+                </div>
+                <div class="col-6">
+                    <p>Llegada: {{vuelo.HoraLlegada}}</p>
+                </div>
+            </div>
+
+            <p>Distancia: {{vuelo.Distancia}}</p>
+            <p>Avoin: {{vuelo.Avion}}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+        </div>
+    </ng-template>
 </div>

@@ -1,6 +1,6 @@
 import { IVuelo } from './../../interfaces/vuelo';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import { IRango } from './../../interfaces/IRango';
 import { RANGOS, AVIONESRANGOS, VUELOS } from './../../data/data';
@@ -13,16 +13,22 @@ import { RANGOS, AVIONESRANGOS, VUELOS } from './../../data/data';
 })
 export class GenerarVueloComponent implements OnInit {
 
+  @ViewChild('myModal') myModal;
+
   rangos: IRango[] = RANGOS;
   aviones = [];
   isDataLoaded = false;
   rangoSeleccionado = -1;
   vuelo: IVuelo = null;
   listo = false;
+  mobile = false;
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
+    if (window.screen.width === 360) { // 768px portrait
+      this.mobile = true;
+    }
   }
 
   getAviones(rango) {
@@ -66,5 +72,23 @@ export class GenerarVueloComponent implements OnInit {
       });
     }
 
+  }
+
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      //this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 }

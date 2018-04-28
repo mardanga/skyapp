@@ -10,6 +10,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { GenerarVueloComponent } from './components/generar-vuelo/generar-vuelo.component';
 import { ListadoVuelosComponent } from './components/listado-vuelos/listado-vuelos.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
 
 const appRoutes: Routes = [
   { path: 'generar', component: GenerarVueloComponent },
@@ -24,6 +27,7 @@ const appRoutes: Routes = [
     NavbarComponent,
     GenerarVueloComponent,
     ListadoVuelosComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -31,6 +35,7 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
+    NgbModule.forRoot(),
     FormsModule
   ],
   providers: [],
